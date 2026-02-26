@@ -3,11 +3,11 @@
 app.use("/user",(req,res)=>{
     res.send("hahahahah")
 })
-app.get("/user",(req,res)=>{
-    res.send({firstName:"akhshat",
-        lastname:"singh"
-    })
-})
+// app.get("/user",(req,res)=>{
+//     res.send({firstName:"akhshat",
+//         lastname:"singh"
+//     })
+// })
 app.post("/user",(req,res)=>{
     res.send("user is resent")
 })
@@ -30,12 +30,21 @@ app.delete("/user",(rq,res)=>{
         res.send("user has options")
     })
 
-    app.use("/test",(req,res)=>{
-        res.send("llo from the dashboardr")
-    })
- app.use("/",(req,res)=>{
-        res.send("Hello from the dashboard")
-    });
+    // app.use("/test",(req,res)=>{
+    //     res.send("llo from the dashboardr")
+    // })
+//  app.use("/",(req,res)=>{
+//         res.send("Hello from the dashboard")
+//     });
+
+
+// app.get("/a/",(req,res)=>{
+//     res.send({firstName:"Akshay",lastName:"shaini"})
+// })
+app.get(/.*fly$/,(req,res)=>{
+    console.log(req.query(req,res))
+    res.send("getting data")
+} ) 
     app.listen(7777,()=>{
         console.log("Seer is successfully listening on port 7777.....")
-    })
+    })  
