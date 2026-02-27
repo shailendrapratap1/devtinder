@@ -57,47 +57,55 @@
 
  // GET /users => miidleware chain => requeat haandler
 
-app.use("/",(req,res,next)=>{
-    // res.send("Handling / route")
-    next()
-})
-app.get( 
-    "/user",
+// app.use("/",(req,res,next)=>{
+//     // res.send("Handling / route")
+//     next()
+// })
+// app.get( 
+//     "/user",
     
-    (req,res,next)=>{
-    // Route handler 
-    // res.send("Route handler 1")
-    res.send("2nd route hanser")
-    // console.log(" handling the route user")
-     next()
+//     (req,res,next)=>{
+//     // Route handler 
+//     // res.send("Route handler 1")
+//     res.send("2nd route hanser")
+//     // console.log(" handling the route user")
+//      next()
     
     
-},
-(req,res,next)=>{
-    // console.log("sending the res")
-    res.send(" 2nd response")
-    next()
-   
-} ,
-//     ],
-(req,res,next)=>{
-    // console.log("sending the res")
-    res.send("2nd route handler response")
-    // next()
-} 
+// },
 // (req,res,next)=>{
-//     console.log("sending the res")
-//     res.send(" 4th response")
+//     // console.log("sending the res")
+//     res.send(" 2nd response")
+//     next()
+   
+// } ,
+// //     ],
+// (req,res,next)=>{
+//     // console.log("sending the res")
+//     res.send("2nd route handler response")
+//     // next()
+// } 
+// // (req,res,next)=>{
+// //     console.log("sending the res")
+// //     res.send(" 4th response")
      
-// }   
-)
-
-
-
-
-
-
-
+// // }   
+// )
+app.get("/admin/getAllData",(req,res)=>{
+    // Logic of chunking the request ia authorised
+    const token = "xyzjkjk"
+    const isAdminAuthorized = token === "xyz";
+    if(isAdminAuthorized){
+        res.send("Alldata SENT")
+    }
+    else{
+        res.status(401).send("unathourized")
+    }
+})
+app.get("/admin/deleteUser",(req,res)=>{
+    // logic of checking if adin is authorized
+    res.send("Delete a user")
+})
 
 
     app.listen(7777,()=>{
