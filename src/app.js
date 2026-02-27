@@ -52,33 +52,44 @@
 // console.log(req.params);
 // res.send({firstName:"Akshay",lastName:"Saini"})
 // })
-app.use( 
+
+//  app.use("/route",rH,[rh2,rh3],rh4,rh5)
+
+ // GET /users => miidleware chain => requeat haandler
+
+app.use("/",(req,res,next)=>{
+    // res.send("Handling / route")
+    next()
+})
+app.get( 
     "/user",
-    [
+    
     (req,res,next)=>{
     // Route handler 
     // res.send("Route handler 1")
-    console.log(" handling the route user")
+    res.send("2nd route hanser")
+    // console.log(" handling the route user")
      next()
     
     
 },
 (req,res,next)=>{
-    console.log("sending the res")
-    // res.send(" 2nd response")
+    // console.log("sending the res")
+    res.send(" 2nd response")
     next()
+   
 } ,
-    ],
+//     ],
 (req,res,next)=>{
-    console.log("sending the res")
-    // res.send("3rd response")
-    next()
-} ,
-(req,res,next)=>{
-    console.log("sending the res")
-    res.send(" 4th response")
+    // console.log("sending the res")
+    res.send("2nd route handler response")
+    // next()
+} 
+// (req,res,next)=>{
+//     console.log("sending the res")
+//     res.send(" 4th response")
      
-}   
+// }   
 )
 
 
