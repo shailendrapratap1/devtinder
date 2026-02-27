@@ -48,10 +48,30 @@
 
 
 
-app.get("/user/:userId/:name/:password",(req,res)=>{
-console.log(req.params);
-res.send({firstName:"Akshay",lastName:"Saini"})
-})
+// app.get("/user/:userId/:name/:password",(req,res)=>{
+// console.log(req.params);
+// res.send({firstName:"Akshay",lastName:"Saini"})
+// })
+app.use("/user",(req,res)=>{
+    // Route handler 
+    // res.send("Route handler 1")
+    console.log(" handling the route user")
+    res.send("Response")
+},
+()=>{
+    console.log("sending the res")
+    res.send("response")
+}
+)
+
+
+
+
+
+
+
+
+
     app.listen(7777,()=>{
         console.log("Seer is successfully listening on port 7777.....")
     })  
