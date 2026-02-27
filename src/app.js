@@ -52,16 +52,33 @@
 // console.log(req.params);
 // res.send({firstName:"Akshay",lastName:"Saini"})
 // })
-app.use("/user",(req,res)=>{
+app.use( 
+    "/user",
+    [
+    (req,res,next)=>{
     // Route handler 
     // res.send("Route handler 1")
     console.log(" handling the route user")
-    res.send("Response")
+     next()
+    
+    
 },
-()=>{
+(req,res,next)=>{
     console.log("sending the res")
-    res.send("response")
-}
+    // res.send(" 2nd response")
+    next()
+} ,
+    ],
+(req,res,next)=>{
+    console.log("sending the res")
+    // res.send("3rd response")
+    next()
+} ,
+(req,res,next)=>{
+    console.log("sending the res")
+    res.send(" 4th response")
+     
+}   
 )
 
 
