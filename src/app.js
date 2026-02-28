@@ -107,20 +107,42 @@
 //     res.send("Delete a user")
 // })
 
-const { adminAuth,userAuth }
-= require("./middlewares/auth");
-app.use(" /admin",adminAuth); 
+// const { adminAuth,userAuth }
+// = require("./middlewares/auth");
+// app.use(" /admin",adminAuth); 
+
+// app.post("/user/login",(req,res)=>{
+//     res.send("logged in successfully")
+// })
+// app.get("/user",userAuth,(req,res)=>{
+//     res.send("User data sent")
+// })
+// app.get("/admin/getAllData",(req,res)=>{
+//     res.send("user data sent")
+// })
+// app.get("/admin/deleteData",(req,res)=>{
+//     res.send("data deleted")
+// })
+   app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("something went wrong")
+    }
+   })
+   app.get("/getUserData",(req,res)=>{
+try{
+    // logic of db call and getuser data
+
+    throw new Error("dvbzhjf");
+        res.send("User Data Sent")
+    }
+    catch(err){
+        res.status(500).send("some error occured")
+    }
+})
+    
+ 
 
 
-app.get("/user",userAuth,(req,res)=>{
-    res.send("User data sent")
-})
-app.get("/admin/getAllData",(req,res)=>{
-    res.send("user data sent")
-})
-app.get("/admin/deleteData",(req,res)=>{
-    res.send("data deleted")
-})
     app.listen(7777,()=>{
         console.log("Seer is successfully listening on port 7777.....")
-    })  
+    })   
