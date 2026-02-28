@@ -2,10 +2,10 @@
   "name": "devtinder",
   "version": "1.0.0",
   "description": "tinder for  dev",
-  "main":"index.js",
-  "scripts":{
-    "start":"node src/app.js",
-    "dev":"nodemon src/app.js"
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "keywords": [
     "nodejs",
@@ -14,8 +14,8 @@
   "license": "ISC",
   "author": "shailendra pratap",
   "type": "commonjs",
- 
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.2.3"
   }
 }
