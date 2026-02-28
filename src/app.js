@@ -106,17 +106,13 @@
 //     // logic of checking if adin is authorized
 //     res.send("Delete a user")
 // })
-app.use("/admin",(req,res,next)=>{
-    console.log("Admin auth is getting cheked!!")
-  const token = "xyz";
-  const isAdminAuthorized = token === "xyz";
-  if(!isAdminAuthorized){
-    res.status(401).send("Unauthorized request")
-  }else{
-    next();
-  }
-})
-app.get("/user",(req,res)=>{
+
+const { adminAuth,userAuth }
+= require("./middlewares/auth");
+app.use(" /admin",adminAuth); 
+
+
+app.get("/user",userAuth,(req,res)=>{
     res.send("User data sent")
 })
 app.get("/admin/getAllData",(req,res)=>{
@@ -128,4 +124,3 @@ app.get("/admin/deleteData",(req,res)=>{
     app.listen(7777,()=>{
         console.log("Seer is successfully listening on port 7777.....")
     })  
-
