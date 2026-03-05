@@ -217,6 +217,25 @@ app.delete("/user",async(req,res) => {
   }
 })
 
+// login api
+
+app.post("/login",async(req,res)=>{
+  try{
+    const {emailId,password}= req.body;
+
+    const user = await User.findOne({emailId:emailId});
+    if(!user){
+      throw new Error("Invalid credentials")
+    }
+    const isPasswordValid = await bcrypt.compare(password,user.password)
+    if(isPasswordValid){
+      res.send("Login successfull!!!")
+    }else throw new Error("Invalid credentials")
+  }catch(err){
+    res.status(400).send("ERROR : " + err.message)
+  }
+})
+
 app.patch("/user/:userId",async(req,res)=>{
   const userId= req.params?.userId;
   const data = req.body;
