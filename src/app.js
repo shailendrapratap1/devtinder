@@ -211,12 +211,12 @@ app.patch("/user",async(req,res)=>{
   const data = req.body;
   console.log("data")
   try{
-    const user = await User.findByIdAndUpdate({_id:userId},data,{returnDocument:"after"})
+    const user = await User.findByIdAndUpdate({_id:userId},data,{returnDocument:"after",runValidators:true})
    console.log(user)
-    res.send("user updated successfully")
+    res.status(400).send("user update successfully")
   
   }catch(err){
-    res.status(400).send("something went wrong")
+    res.status(400).send("something went wrong"+ err.message)
   }
 })
 
