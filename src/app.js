@@ -144,8 +144,13 @@ const connectDB =  require("./config/database")
  const app = express();  
  const User = require("./models/user")
  const { validateSignUpData }= require("./utils/validation")
+ const cookieParser = require("cookie-parser")
  const bcrypt = require("bcrypt")
+ const jwt = require("jsonwebtoken")
+ const {userAuth} = require('./middlewares/auth');
+const user = require("./models/user");
 app.use(express.json())
+app.use(cookieParser())
  app.post("/signup",async(req,res)=>{
   // validation of data
 
@@ -229,12 +234,34 @@ app.post("/login",async(req,res)=>{
     }
     const isPasswordValid = await bcrypt.compare(password,user.password)
     if(isPasswordValid){
+
+    // Create a jwt token
+
+    // create jwt token 
+
+    // ADD THE TOKEN
+const token = await jwt.sign({_id: user._id},"DEV@TNDER$8578")
+
+    res.cookie("token",token)
+
       res.send("Login successfull!!!")
     }else throw new Error("Invalid credentials")
   }catch(err){
     res.status(400).send("ERROR : " + err.message)
   }
 })
+app.get("/profile",userAuth, async(req,res)=>{
+   try{
+  
+
+  const user = req.user;
+  res.send(user);
+   }
+  catch(err){
+    res.status(400).send("ERROR : " + err.message)
+  }
+  })
+
 
 app.patch("/user/:userId",async(req,res)=>{
   const userId= req.params?.userId;
