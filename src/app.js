@@ -136,16 +136,16 @@
 //         res.status(500).send("some error occured")
 //     }
 // })
-    
+     const app = express(); 
 const connectDB =  require("./config/database")
- const app = express();  
+ 
  const User = require("./models/user")
  const { validateSignUpData }= require("./utils/validation")
  const cookieParser = require("cookie-parser")
  const bcrypt = require("bcrypt")
  const jwt = require("jsonwebtoken")
 //  const {userAuth} = require('./middlewares/auth');
-// const user = require("./models/user");
+const user = require("./models/user");
 app.use(express.json())
 app.use(cookieParser())
 
