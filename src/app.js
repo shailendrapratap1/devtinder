@@ -232,7 +232,7 @@ app.post("/login",async(req,res)=>{
     if(!user){
       throw new Error("Invalid credentials")
     }
-    const isPasswordValid = await bcrypt.compare(password,user.password)
+    const isPasswordValid = await user.validatePassword(password)
     if(isPasswordValid){
 
     // Create a jwt token
@@ -240,9 +240,11 @@ app.post("/login",async(req,res)=>{
     // create jwt token 
 
     // ADD THE TOKEN
-const token = await jwt.sign({_id: user._id},"DEV@TNDER$8578")
+const token = await user.getJWT( )
 
-    res.cookie("token",token)
+    res.cookie("token",token,{
+          expires: new Date(Date.now()+ 8 * 3600000),
+    })
 
       res.send("Login successfull!!!")
     }else throw new Error("Invalid credentials")
@@ -254,7 +256,7 @@ app.get("/profile",userAuth, async(req,res)=>{
    try{
   
 
-  const user = req.user;
+  const user = req.user
   res.send(user);
    }
   catch(err){
@@ -262,6 +264,12 @@ app.get("/profile",userAuth, async(req,res)=>{
   }
   })
 
+  app.post("/sendConnectionRequest",userAuth,async(req,res)=>{
+    const user = req.user;
+
+    console.log("sending a connecton request ")
+    res.send(user.firstName + "sent the connection request at" )
+  })
 
 app.patch("/user/:userId",async(req,res)=>{
   const userId= req.params?.userId;
@@ -276,7 +284,7 @@ if(!isUpdateAllowed){
   throw new Error("Update not allowed")
 }
 if(data?.skills.length>10){
-  throw new("length should not exceed the limit")
+  throw new Error("length should not exceed the limit")
 }
 
     const user = await User.findByIdAndUpdate({_id:userId},data,{returnDocument:"after",runValidators:true})
