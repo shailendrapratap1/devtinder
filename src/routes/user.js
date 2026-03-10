@@ -1,10 +1,10 @@
 const express = require("express")
 const userRouter = express.Router();
-
+const User = require("../models/user")
 const {userAuth} = require("../middlewares/auth")
 const ConnectionRequest = require("../models/connectionRequest")
 
-const USER_SAFEDATA =["firstName,lastName,emailId,skills"]
+const USER_SAFEDATA =["firstName","lastName","emailId","skills"]
 
 userRouter.get("/user/requests/received",userAuth,async(req,res)=>{
     try{
@@ -51,5 +51,37 @@ res.json({data})
 
    
 })
+
+
+userRouter.get("/feed",userAuth,async(req,res)=>{
+try{
+const loggedInUser = req.user
+
+const connectionRequests = await ConnectionRequest.find({
+   $or:[
+    {fromUserId:loggedInUser._id},{toUserId:loggedInUser._id}
+   ]
+
+}).select("fromUserId toUserId")
+
+const hideUsersFromFeed = new Set();
+connectionRequests.forEach((req)=>{
+   hideUsersFromFeed.add(req.fromUserId.toString())
+  hideUsersFromFeed.add(req.toUserId.toString())
+
+})
+
+const users = await User.find({
+    $and:[{_id:{$nin:Array.from(hideUsersFromFeed)}},
+        {_id:{$ne:loggedInUser._id}},
+    ]
+}).select(USER_SAFEDATA)
+res.send(users)
+}catch(err){
+    res.send("invalid")
+}
+
+})
+
 
 module.exports = userRouter

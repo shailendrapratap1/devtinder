@@ -8,17 +8,20 @@ const userSchema = new mongoose.Schema({
     firstName:{
         type:String,
         required:true  ,
+        ref:"User",
         minLength:5,
         maxLength:50
     },
     lastName:{
         type: String,
+        ref:"User",
 
     },
     emailId:{
         type:String,
           lowercase:true,
         required:true,
+        ref:"User",
         unique:true,
       trim:true,
       validate(value){
@@ -46,6 +49,7 @@ min:18
             values:["male","female","others"],
             message:`{VALUE} is incorrect  gender`
         },
+        ref:"User",
         // validate(value){
         //     if(!['male','female','others'].includes(value)){
         //         throw new Error("Gender data is not valid")
@@ -55,6 +59,7 @@ min:18
     },
     photoUrl:{
         type:String,
+        ref:"User",
         default:"https://www.bing.com/images/search?view=detailV2&ccid=i%2f1HL4I1&id=36293A16CA5963514E1D4AC288D98B55CC1135F0&thid=OIP.i_1HL4I1H9SznR11omKPFwHaHo&mediaurl=https%3a%2f%2fcanto-wp-media.s3.amazonaws.com%2fapp%2fuploads%2f2019%2f08%2f19194138%2fimage-url-3.jpg&exph=824&expw=800&q=image+url+free&FORM=IRPRST&ck=D83B0DEB3D6E8839583550834CB38EAD&selectedIndex=12&itb=0"
     ,     validate(value){
         if(!validator.isURL){
