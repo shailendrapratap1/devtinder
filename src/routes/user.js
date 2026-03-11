@@ -4,7 +4,7 @@ const User = require("../models/user")
 const {userAuth} = require("../middlewares/auth")
 const ConnectionRequest = require("../models/connectionRequest")
 
-const USER_SAFEDATA =["firstName","lastName","emailId","skills"]
+const USER_SAFEDATA =["firstName","lastName","emailId","skills",]
 
 userRouter.get("/user/requests/received",userAuth,async(req,res)=>{
     try{
@@ -57,6 +57,13 @@ userRouter.get("/feed",userAuth,async(req,res)=>{
 try{
 const loggedInUser = req.user
 
+const  page = parseInt(req.query.page)|| 1;
+let limit = parseInt(req.query.limit) ||10;
+limit = limit > 50 ? 50:limit;
+const skip = (page - 1) * limit;
+
+
+
 const connectionRequests = await ConnectionRequest.find({
    $or:[
     {fromUserId:loggedInUser._id},{toUserId:loggedInUser._id}
@@ -76,6 +83,8 @@ const users = await User.find({
         {_id:{$ne:loggedInUser._id}},
     ]
 }).select(USER_SAFEDATA)
+.skip(skip)
+.limit(limit)
 res.send(users)
 }catch(err){
     res.send("invalid")
