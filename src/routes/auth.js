@@ -44,7 +44,7 @@ if(isPasswordValid){
     res.cookie("token",token,{
         expires: new Date(Date.now()+8 * 360000)
     })
-    res.send("Login successfull")
+    res.send(user)
 }else throw new Error("Invalid credentials")
     }catch(err){
         res.status(400).send("ERROR : " + err.message)

@@ -146,6 +146,11 @@ const connectDB =  require("./config/database")
  const jwt = require("jsonwebtoken")
 //  const {userAuth} = require('./middlewares/auth');
 const user = require("./models/user");
+const cors = require("cors")
+app.use(cors({
+    origin:"http://localhost:5174",
+    credentials:true,
+}))
 app.use(express.json())
 app.use(cookieParser())
 
