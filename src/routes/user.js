@@ -4,7 +4,7 @@ const User = require("../models/user")
 const {userAuth} = require("../middlewares/auth")
 const ConnectionRequest = require("../models/connectionRequest")
 
-const USER_SAFEDATA =["firstName","lastName","emailId","skills",]
+const USER_SAFEDATA =["firstName","lastName","emailId","skills","photoUrl"]
 
 userRouter.get("/user/requests/received",userAuth,async(req,res)=>{
     try{
@@ -30,7 +30,7 @@ userRouter.get("/user/connections",userAuth,async(req,res)=>{
        const loggedInUser = req.user
    
     const connectionRequests = await ConnectionRequest.find({
-        $:[
+        $or:[
             {toUserId:loggedInUser._id,status:"accepted"},
             {fromUserId:loggedInUser._id,status:"accepted"},
           

@@ -43,7 +43,4 @@ if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
     connectionRequestSchema
  )
 
- module.exports = connectionRequestModel
-
-
-
+ module.exports = connectionRequestModel 
